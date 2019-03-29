@@ -1,0 +1,12 @@
+[
+    {
+        "name": "users-service-proxy",
+        "route": "/users",
+        "target": "http://ms_users:3000"
+    },
+    {
+        "name": "contacts-service-proxy",
+        "route": "/contacts",
+        "target": "http://ms_contacts:4000"
+    }
+]
