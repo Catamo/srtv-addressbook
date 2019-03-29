@@ -17,7 +17,7 @@ process.on('uncaughtRejection', (err, promise) => {
 
 mediator.on('di.ready', (container) => {
   console.log('Connected. Starting Server')
-  
+
   return server
     .start(container)
     .then(app => {

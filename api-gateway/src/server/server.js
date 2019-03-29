@@ -1,12 +1,13 @@
 'use strict'
 const express = require('express')
 const proxy = require('http-proxy-middleware')
-const spdy = require('spdy')
-const serviceProxies = require('../../service-proxies.json')
+const api = require('../api/authentication')
+const passport = require('../security/passport')
 
 const start = (container) => {
   return new Promise((resolve, reject) => {
-    const {port, ssl} = container.resolve('serverSettings')
+    const {port} = container.resolve('serverSettings')
+    const serviceProxies = container.resolve('serviceProxies')
 
     if (!serviceProxies) {
       reject(new Error('The server must be started with services proxies'))
@@ -16,25 +17,25 @@ const start = (container) => {
     }
 
     const app = express()
+    app.use(express.json())
 
-    for (let serviceProxy of serviceProxies) {
-      const {route, target} = serviceProxy
+    for (let name of Reflect.ownKeys(serviceProxies)) {
+      serviceProxies[name].forEach(serviceProxy => {
+        let {target, route} = serviceProxy
 
-      app.use(route, proxy({
-        target,
-        changeOrigin: true,
-        logLevel: 'debug'
-      }))
+        app.use(route, proxy({
+          target,
+          changeOrigin: true
+        }))
+      })
     }
 
-    if (process.env.NODE === 'test') {
-      const server = app.listen(port, () => resolve(server))
-    } else {
-      // const server = spdy.createServer(ssl, app)
-      //   .listen(port, () => resolve(server))
-      
-      const server = app.listen(port, () => resolve(server))
-    }
+    // const server = spdy.createServer(ssl, app)
+    //   .listen(port, () => resolve(server))
+    // passport(container)
+    api(app, container)
+
+    const server = app.listen(port, () => resolve(server))
   })
 }
 

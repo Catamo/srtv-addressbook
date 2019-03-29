@@ -1,38 +1,9 @@
 'use strict'
 const { User } = require('../mongo/models/')
+const { encrypt, compareHash } = require('../utils/encryption')
 
 const repository = (connection) => {
-  const getAllUsers = () => {
-    return new Promise((resolve, reject) => {
-      const users = []
-      const cursor = User.find({})
-      const addUser = (user) => {
-        users.push(user)
-      }
-      const sendUsers = (err) => {
-        if (err) {
-          reject(new Error('An error occured fetching all users, err:' + err))
-        }
-        resolve(users.slice())
-      }
-      cursor.forEach(addUser, sendUsers)
-    })
-  }
-
-  const getUserById = (id) => {
-    return new Promise((resolve, reject) => {
-      const sendUser = (err, user) => {
-        if (err) {
-          reject(new Error(`An error occured fetching a user with id: ${id}, err: ${err}`))
-        }
-        resolve(user)
-      }
-
-      User.findById(id, sendUser)
-    })
-  }
-
-  const addUser = (user) => {
+  const registerUser = (user) => {
     return new Promise((resolve, reject) => {
       const sendUser = (err, user) => {
         if (err) {
@@ -41,13 +12,28 @@ const repository = (connection) => {
         resolve(user)
       }
 
-      let newUser = new User(user)
-      newUser.save(sendUser)
+      encrypt(user.password).then((hash) => {
+        let newUser = new User(user)
+        newUser.password = hash
+        newUser.save(sendUser)
+      })
     })
   }
 
-  const updateUser = () => {
-    return null
+  const verifyUserCredentials = (userCredentials) => {
+    return new Promise((resolve, reject) => {
+      const verifyUser = (err, user) => {
+        if (err) {
+          reject(new Error(`An error occured while verifying the user credentials, err: ${err}`))
+        }
+
+        compareHash(userCredentials.password, user.password).then((match) => {
+          resolve(match)
+        })
+      }
+
+      User.findOne({ email: userCredentials.email }, verifyUser)
+    })
   }
 
   const disconnect = () => {
@@ -55,10 +41,8 @@ const repository = (connection) => {
   }
 
   return Object.create({
-    getAllUsers,
-    getUserById,
-    addUser,
-    updateUser,
+    registerUser,
+    verifyUserCredentials,
     disconnect
   })
 }

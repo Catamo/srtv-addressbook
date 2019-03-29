@@ -5,7 +5,7 @@ const repository = require('./repository/repository')
 const config = require('./config/')
 const mediator = new EventEmitter()
 
-console.log('--- Users Service ---')
+console.log('--- Contacts Service ---')
 console.log('Connecting to users repository...')
 
 process.on('uncaughtException', (err) => {
