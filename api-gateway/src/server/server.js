@@ -17,7 +17,6 @@ const start = (container) => {
     }
 
     const app = express()
-    app.use(express.json())
 
     for (let name of Reflect.ownKeys(serviceProxies)) {
       serviceProxies[name].forEach(serviceProxy => {
@@ -29,10 +28,11 @@ const start = (container) => {
         }))
       })
     }
+    app.use(express.json())
 
     // const server = spdy.createServer(ssl, app)
     //   .listen(port, () => resolve(server))
-    // passport(container)
+    passport(container)
     api(app, container)
 
     const server = app.listen(port, () => resolve(server))

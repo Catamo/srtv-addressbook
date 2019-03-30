@@ -13,8 +13,10 @@ module.exports = (container) => {
   }, (username, password, done) => {
     let userCredentials = { email: username, password }
 
-    axios.post(usersServiceUrl + '/user-authentication', userCredentials).then((passwordsMatch) => {
-      if (passwordsMatch) {
+    axios.post(usersServiceUrl + '/user-authentication', userCredentials).then((result) => {
+      let { userVerified } = result.data
+
+      if (userVerified) {
         return done(null, userCredentials)
       } else {
         return done('Incorrect Username / Password')

@@ -8,9 +8,9 @@ module.exports = (app, container) => {
 
   app.post('/authentication', (req, res, next) => {
     passport.authenticate('local', { session: false }, (error, user) => {
-      console.log('kjhkjhkh')
       if (error || !user) {
         res.status(status.UNAUTHORIZED).json({ error })
+        return
       }
       const payload = {
         username: user.email,

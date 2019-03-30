@@ -20,13 +20,8 @@ module.exports = (app, options) => {
       email: req.body.email,
       password: req.body.password
     }
-
     repo.verifyUserCredentials(user).then((userVerified) => {
-      if (userVerified) {
-        res.status(status.OK)
-      } else {
-        res.status(status.UNAUTHORIZED)
-      }
+      res.status(status.OK).json({userVerified})
     }).catch(next)
   })
 }
