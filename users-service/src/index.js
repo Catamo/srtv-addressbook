@@ -1,6 +1,6 @@
 'use strict'
 const {EventEmitter} = require('events')
-const server = require('./server/server')
+const amqp = require('./amqp')
 const repository = require('./repository/repository')
 const config = require('./config/')
 const mediator = new EventEmitter()
@@ -17,21 +17,10 @@ process.on('uncaughtRejection', (err, promise) => {
 })
 
 mediator.on('db.ready', (db) => {
-  let rep
   repository.connect(db)
-    .then(repo => {
-      console.log('Connected. Starting Server')
-      rep = repo
-      return server.start({
-        port: config.serverSettings.port,
-        repo
-      })
-    })
-    .then(app => {
-      console.log(`Server started succesfully, running on port: ${config.serverSettings.port}.`)
-      app.on('close', () => {
-        rep.disconnect()
-      })
+    .then(connection => {
+      console.log('Connected. Starting Worker')
+      amqp(connection)
     })
 })
 

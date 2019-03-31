@@ -1,6 +1,18 @@
 version: "3"
 
-services:
+services:    
+  rabbitmq:
+    image: rabbitmq
+    command: rabbitmq-server
+    ports:
+      - "0.0.0.0:5672:5672"
+      - "0.0.0.0:15672:15672"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:5672"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  
   default:
     build: ./api-gateway
     container_name: api_gateway
@@ -9,6 +21,9 @@ services:
     working_dir: "/home/appuser/app"
     ports:
       - "5000:5000"
+    depends_on:
+      - rabbitmq
+    restart: on-failure
     command: npm run start
 
   users_service:
@@ -19,6 +34,9 @@ services:
     working_dir: "/home/appuser/app"
     ports:
       - "3000:3000"
+    depends_on:
+      - rabbitmq
+    restart: on-failure
     command: npm run start
 
   contacts_service:
@@ -29,4 +47,7 @@ services:
     working_dir: "/home/appuser/app"
     ports:
       - "4000:4000"
+    depends_on:
+      - rabbitmq
+    restart: on-failure
     command: npm run start

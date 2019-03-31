@@ -2,8 +2,8 @@ const dbSettings = {
   server_url: process.env.DB_SERVER_URL
 }
 
-const serverSettings = {
-  port: process.env.PORT || 3000
+const amqpSettings = {
+  url: 'amqp://rabbitmq:5672'
 }
 
-module.exports = Object.assign({}, { dbSettings, serverSettings })
+module.exports = Object.assign({}, { dbSettings, amqpSettings })

@@ -2,10 +2,10 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
-const axios = require('axios')
+const amqpClient = require('../amqp/client')
 
 module.exports = (container) => {
-  const { usersServiceUrl, tokenSecret } = container.resolve('authSettings')
+  const { tokenSecret } = container.resolve('authSettings')
 
   passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -13,18 +13,23 @@ module.exports = (container) => {
   }, (username, password, done) => {
     let userCredentials = { email: username, password }
 
-    axios.post(usersServiceUrl + '/user-authentication', userCredentials).then((result) => {
-      let { userVerified } = result.data
-
-      if (userVerified) {
-        return done(null, userCredentials)
-      } else {
-        return done('Incorrect Username / Password')
-      }
-    })
-    .catch((error) => {
-      done(error)
-    })
+    amqpClient.createClient({ url: 'amqp://rabbitmq:5672' })
+      .then(ch => {
+        amqpClient
+          .sendRPCMessage(ch, JSON.stringify(userCredentials), 'users.validate')
+          .then((msg) => {
+            let { userVerified } = JSON.parse(msg)
+            if (userVerified) {
+              return done(null, userCredentials)
+            } else {
+              return done('Incorrect Username / Password')
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+            done(error)
+          })
+      })
   }))
 
   passport.use(new JWTStrategy({
