@@ -16,8 +16,6 @@ RUN npm cache clear --force . && \
     # npm cache verify && \
     npm install --silent --progress=false --production
 
-RUN npm rebuild --target=7.0.0 --target_platform=linux --target_arch=x64 --target_libc=glibc
-
 RUN chown -R appuser:appgroup $HOME/*
 USER appuser
 
