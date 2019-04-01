@@ -10,8 +10,7 @@ install:
 - docker-compose pull
 - docker-compose build
 
-script:
-- docker-compose run --no-deps --rm api_gateway
+script: "true"
 
 deploy:
   - provider: script
