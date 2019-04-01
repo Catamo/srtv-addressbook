@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
+declare -a arr=("api-gateway" "contacts-service" "users-service")
 
 set -e;
 
-image_tag="latest";
-image_full_name="catamo/srtv-addressbook:$image_tag";
+for i in "${arr[@]}"
+do
+    cd "./${arr[i]}"
 
-echo "Building image '$image_full_name'";
-docker build . -t "$image_full_name";
+    image_tag="latest";
+    image_full_name="catamo/srtv-addressbook_${arr[i]}:$image_tag";
 
-echo "Authenticating";
-echo "$DOCKER_PASS" | docker login -u="$DOCKER_USERNAME" --password-stdin;
+    echo "Building image '$image_full_name'";
+    docker build . -t "$image_full_name";
 
-echo "Pushing image '$image_full_name'";
-docker push "$image_full_name";
-echo "Push finished!";
+    echo "Authenticating";
+    echo "$DOCKER_PASS" | docker login -u="$DOCKER_USERNAME" --password-stdin;
+
+    echo "Pushing image '$image_full_name'";
+    docker push "$image_full_name";
+    echo "Push finished!";
+done
 
 exit 0;
