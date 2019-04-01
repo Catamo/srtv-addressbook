@@ -11,6 +11,9 @@ const connect = (options, mediator) => {
       });
 
       let db = admin.firestore();
+      
+      const settings = { timestampsInSnapshots: true}
+      db.settings(settings)
 
       mediator.emit("db.ready", db);
     } catch (err) {

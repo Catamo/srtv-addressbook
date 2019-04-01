@@ -44,6 +44,7 @@
     "amqplib": "^0.5.3",
     "express": "^4.16.4",
     "firebase-admin": "^7.2.0",
+    "grpc": "^1.19.0",
     "helmet": "^3.16.0",
     "http-status": "^0.2.5",
     "morgan": "^1.9.1"

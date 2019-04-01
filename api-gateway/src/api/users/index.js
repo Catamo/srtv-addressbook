@@ -23,11 +23,15 @@ module.exports = (app, container) => {
     "/users/:id/contacts",
     passport.authenticate("jwt", { session: false }),
     (req, res, next) => {
-      let contact = JSON.stringify(req.body);
-      contact.ofUser = req.params.id;
-      console.log("contacts- ", contact, req.params.id);
+      let contact = req.body;
+      contact.relatedUserId = req.params.id;
+
       amqpClient
-        .sendRPCMessage(amqpChannel, contact, amqpQueues.contactCreateQueue)
+        .sendRPCMessage(
+          amqpChannel,
+          JSON.stringify(contact),
+          amqpQueues.contactCreateQueue
+        )
         .then(msg => {
           const result = JSON.parse(msg);
           res.status(status.CREATED).json(result);

@@ -1,7 +1,7 @@
-FROM node:8.15.1-alpine
+FROM node:10.15.3-alpine
 
 # Create a new user group and user to our new container and avoid the root user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup --system appgroup && adduser --system appuser --ingroup  appgroup
 
 ENV HOME=/home/appuser
 
@@ -14,8 +14,7 @@ RUN chown -R appuser:appgroup $HOME/* /usr/local/
 WORKDIR $HOME/app
 RUN npm cache clean --force && \
     npm cache verify && \
-    npm install --silent --progress=false --production && \
-    npm rebuild --target=8.1.0 --target_platform=linux --target_arch=x64 --target_libc=glibc --update-binary
+    npm install --silent --progress=false --production
 
 RUN chown -R appuser:appgroup $HOME/*
 USER appuser
