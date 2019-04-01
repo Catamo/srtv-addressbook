@@ -10,7 +10,7 @@ install:
 - docker-compose pull
 - docker-compose build
 
-before_script: cd srtv-addressbook
+before_script: ls
 
 script: "true"
 
