@@ -15,7 +15,7 @@ services:
     logging:
       driver: none
   
-  default:
+  api:
     build: ./api-gateway
     container_name: api_gateway
     volumes:
