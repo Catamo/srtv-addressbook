@@ -1,5 +1,5 @@
 {
-  "name": "movies-service",
+  "name": "api-gateway",
   "version": "1.0.0",
   "description": "",
   "author": "Victor Catamo <victor.catamo.rojas@gmail.com>",
@@ -12,11 +12,12 @@
   },
   "scripts": {
     "test": "mocha -R spec src/**/*.spec.js",
-    "start": "node -r dotenv/config src/index.js",
+    "start": "npm run swagger && node -r dotenv/config src/index.js",
     "lint": "standard --verbose | snazzy",
     "node-debug": "DEBUG=express* node src/index.js",
     "chrome-debug": "node --debug-brk --inspect src/index.js",
-    "int-test": "node_modules/.bin/mocha integration-test/index.js"
+    "int-test": "node_modules/.bin/mocha integration-test/index.js",
+    "swagger": "js-yaml ./api/swagger/swagger.yaml > swagger.json"
   },
   "keywords": [
     "express",
@@ -27,13 +28,16 @@
   "devDependencies": {
     "dotenv": "^7.0.0",
     "eslint": "^3.13.1",
+    "js-yaml": "^3.13.0",
     "mocha": "^3.2.0",
     "nodejs-dashboard": "^0.3.0",
     "nsp": "^2.6.2",
     "should": "^11.1.2",
     "snazzy": "^6.0.0",
     "standard": "^8.6.0",
-    "supertest": "^2.0.1"
+    "supertest": "^2.0.1",
+    "swagger": "^0.7.5",
+    "swagger-editor": "^3.6.27"
   },
   "dependencies": {
     "amqplib": "^0.5.3",

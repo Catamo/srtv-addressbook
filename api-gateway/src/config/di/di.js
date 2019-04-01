@@ -1,17 +1,24 @@
 const { createContainer, asValue } = require('awilix')
 
-function initDI ({serverSettings, authSettings, serviceProxies}, mediator) {
+const register = (container, key, value) => {
+  container.register({
+    key: asValue(value)
+  })
+}
+
+const initDI = ({amqpSettings, serverSettings, authSettings, amqpQueues}, mediator) => {
   mediator.once('init', () => {
     const container = createContainer()
 
     container.register({
+      amqpSettings: asValue(amqpSettings),
       serverSettings: asValue(serverSettings),
       authSettings: asValue(authSettings),
-      serviceProxies: asValue(serviceProxies)
+      amqpQueues: asValue(amqpQueues)
     })
 
     mediator.emit('di.ready', container)
   })
 }
 
-module.exports.initDI = initDI
+module.exports = Object.assign({}, {initDI, register})

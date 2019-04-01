@@ -1,6 +1,5 @@
 /* eslint-env mocha */
 const {EventEmitter} = require('events')
-const test = require('assert')
 const {init} = require('./')
 
 describe('DI configuration', () => {

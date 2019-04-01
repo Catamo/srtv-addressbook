@@ -1,0 +1,152 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the SRTV AddressBook server."
+  version: "1.0.0"
+  title: "SRTV AddressBook"
+  contact:
+    email: "victor.catamo.rojas@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+# host: "petstore.swagger.io"
+basePath: "/"
+tags:
+- name: "authentication"
+  description: "Request access token needed to use other routes"
+- name: "users"
+  description: "Users operations"
+- name: "contacts"
+  description: "User contacts operations"
+schemes:
+- "https"
+- "http"
+paths:
+  /authentication:
+    post:
+      tags:
+      - "authentication"
+      summary: "Login to the service"
+      description: "Access credentials are sent to the service, and it returns a JWT access token"
+      operationId: "login"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "email"
+        description: "An email that indentifies the user"
+        required: true
+      - in: "body"
+        name: "password"
+        description: "The password of the user"
+        required: true
+      responses:
+        200:
+          description: "The login was successful"
+          schema:
+            $ref: "#/definitions/Authentication"
+        403:
+          description: "The credentials entered are not valid"
+  /users:
+    post:
+      tags:
+      - "users"
+      summary: "Register a new user"
+      description: "User data is sent to the service, which is then return with its new Id"
+      operationId: "registerUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Email and Password of the user"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        201:
+          description: "The user was created"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "The user data entered is not valid"
+  /users/{userId}/contacts:
+    post:
+      tags:
+      - "users"
+      - "contacts"
+      summary: "Create a new contact for the user"
+      description: "Creates a contact which is related to the user by the user id"
+      operationId: "createContact"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Data of the user contact"
+        required: true
+        schema:
+          $ref: "#/definitions/Contact"
+      responses:
+        201:
+          description: "The contact was created"
+          schema:
+            $ref: "#/definitions/Contact"
+        400:
+          description: "Invalid User Id supplied"
+        403:
+          description: "Authorization required"
+        404:
+          description: "User not found"
+      security:
+      - api_key: []
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Authentication:
+    type: "object"
+    properties:
+      userEmail:
+        type: "string"
+      jwt:
+        type: "string"
+    xml:
+      name: "Authentication"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      email:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "User"
+  Contact:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      surname:
+        type: "string"
+      email:
+        type: "string"
+      phoneNumber:
+        type: "string"
+    xml:
+      name: "Contact"
+

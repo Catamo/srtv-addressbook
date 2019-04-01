@@ -1,10 +1,11 @@
-'use strict'
 const amqp = require('amqplib')
 const EventEmitter = require('events')
 
 // this queue name will be attached to "replyTo" property on producer's message,
 // and the consumer will use it to know which queue to the response back to the producer
 const REPLY_QUEUE = 'amq.rabbitmq.reply-to'
+const RETRY_INTERVAL = 1000
+const MAX_RETRY_ATTEMPTS = 10
 
 /**
  * Create amqp channel and return back as a promise
@@ -12,16 +13,35 @@ const REPLY_QUEUE = 'amq.rabbitmq.reply-to'
  * @params {String} setting.url
  * @returns {Promise} - return amqp channel
  */
-const createClient = (setting) => amqp.connect(setting.url)
-  .then(conn => conn.createChannel()) // create channel
-  .then(channel => {
-    channel.responseEmitter = new EventEmitter()
-    channel.responseEmitter.setMaxListeners(0)
-    channel.consume(REPLY_QUEUE,
-      msg => channel.responseEmitter.emit(msg.properties.correlationId, msg.content),
-      { noAck: true })
-    return channel
-  })
+const createClient = (settings) => new Promise((resolve, reject) => {
+  let retriesLeft = MAX_RETRY_ATTEMPTS
+
+  const connect = () => {
+    amqp.connect(settings.url)
+      .then(conn => {
+        conn.createChannel()
+          .then(channel => {
+            channel.responseEmitter = new EventEmitter()
+            channel.responseEmitter.setMaxListeners(0)
+            channel.consume(REPLY_QUEUE,
+              msg => channel.responseEmitter.emit(msg.properties.correlationId, msg.content),
+              { noAck: true })
+            resolve(channel)
+          })
+      })
+      .catch(() => {
+        if (retriesLeft > 0) {
+          setTimeout(() => {
+            retriesLeft -= 1
+            connect()
+          }, RETRY_INTERVAL)
+        } else {
+          reject(new Error('Retry attempts exhausted'))
+        }
+      })
+  }
+  connect()
+})
 
 /**
  * Send RPC message to waiting queue and return promise object when

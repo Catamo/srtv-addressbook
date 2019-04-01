@@ -1,5 +1,5 @@
-const {serverSettings, authSettings, serviceProxies} = require('./config')
+const {amqpSettings, serverSettings, authSettings, amqpQueues} = require('./config')
 const {initDI} = require('./di')
-const init = initDI.bind(null, {serverSettings, authSettings, serviceProxies})
+const init = initDI.bind(null, {amqpSettings, serverSettings, authSettings, amqpQueues})
 
 module.exports = Object.assign({}, {init})

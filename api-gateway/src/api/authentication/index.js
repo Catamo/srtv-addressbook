@@ -1,4 +1,3 @@
-'use strict'
 const status = require('http-status')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
