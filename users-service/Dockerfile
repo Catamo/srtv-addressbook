@@ -19,6 +19,6 @@ RUN npm cache clean --force && \
 RUN chown -R appuser:appgroup $HOME/*
 USER appuser
 
-EXPOSE 3000
+# EXPOSE 3000
 
 CMD ["npm", "start"]
