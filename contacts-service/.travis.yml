@@ -13,3 +13,11 @@ install:
 script:
   - yarn test
   - yarn build
+  # build docker images
+  - docker build -t catamo/contacts-service .
+deploy:
+  provider: script
+  script:
+    # push to dockerhub
+    docker push catamo/contacts-service;
+  branch: master
