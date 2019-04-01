@@ -2,9 +2,6 @@
 
 set -e;
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$DIR/.."
-
 image_tag="latest";
 image_full_name="catamo/srtv-addressbook:$image_tag";
 
