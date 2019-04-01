@@ -1,8 +1,8 @@
-const usersWorkers = require("./workers/users");
+const contactsWorkers = require("./workers/contacts");
 const serverHelpers = require("./amqp.server.utils");
 
 module.exports = (settings, repo) => {
   serverHelpers.createChannel(settings).then(channel => {
-    usersWorkers(channel, repo);
+    contactsWorkers(channel, repo);
   });
 };

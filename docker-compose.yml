@@ -50,4 +50,4 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
-    command: npm run start
+    command: npm run start 

@@ -5,11 +5,10 @@ const dbSettings = {
   projectId: process.env.PROJECT_ID,
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGING_SENDER_ID
-}
+};
 
-const serverSettings = {
-  port: process.env.PORT || 4000
-}
+const amqpSettings = {
+  url: process.env.BROKER_URL
+};
 
-module.exports = Object.assign({}, { dbSettings, serverSettings })
-  
+module.exports = Object.assign({}, { dbSettings, amqpSettings });

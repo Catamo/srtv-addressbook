@@ -1,4 +1,3 @@
-# Node v8 as the base image to support ES6
 FROM node:8.15.1-alpine
 
 # Create a new user group and user to our new container and avoid the root user

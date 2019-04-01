@@ -1,4 +1,4 @@
-const {dbSettings, amqpSettings} = require('./config')
-const db = require('./database')
+const { dbSettings, amqpSettings } = require("./config");
+const db = require("./database");
 
-module.exports = Object.assign({}, {dbSettings, amqpSettings, db})
+module.exports = Object.assign({}, { dbSettings, amqpSettings, db });

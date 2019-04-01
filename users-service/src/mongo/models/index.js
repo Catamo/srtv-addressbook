@@ -1,7 +1,7 @@
-let model = require('mongoose').model
+let model = require("mongoose").model;
 
-let SchemaUser = require('./user')
+let SchemaUser = require("./user");
 
 module.exports = {
-  User: model('user', SchemaUser)
-}
+  User: model("user", SchemaUser)
+};
