@@ -10,7 +10,7 @@ install:
 - docker-compose pull
 - docker-compose build
 
-before_script: ls
+before_script: ls -R
 
 script: "true"
 
