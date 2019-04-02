@@ -1,4 +1,4 @@
-docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+docker tag catamo/srtv-addressbook_api-gateway registry.heroku.com/srtv-addressbook-catamo-victor/web
 
 heroku container:push web --app srtv-addressbook-catamo-victor
 

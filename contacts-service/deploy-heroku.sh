@@ -1,4 +1,4 @@
-docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+docker tag catamo/srtv-addressbook_contacts-service registry.heroku.com/srtv-addressbook-mscontacts/worker
 
 heroku container:push worker --app srtv-addressbook-mscontacts
 

@@ -11,6 +11,7 @@ services:
 
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_API_KEY" | docker login -u _ --password-stdin registry.heroku.com 
 
 install:
 - docker-compose build
@@ -21,7 +22,6 @@ deploy:
   - provider: script
     script: 
       docker-compose push;
-      docker-compose -f docker-compose-heroku.yml build;
       bash api-gateway/deploy-heroku.sh;
       bash contacts-service/deploy-heroku.sh;
       bash users-service/deploy-heroku.sh;
