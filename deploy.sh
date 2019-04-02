@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-docker-compose push
+docker-compose push;
 
-heroku container:release web --app registry.heroku.com/srtv-addressbook-catamo-victor/web
+docker push registry.heroku.com/srtv-addressbook-catamo-victor/web;
+heroku container:release web --app srtv-addressbook-catamo-victor
 
 # docker-compose -f docker-compose.heroku.yml push
 
