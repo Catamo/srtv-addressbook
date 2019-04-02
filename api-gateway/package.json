@@ -62,6 +62,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "spdy": "^3.4.4",
-    "swagger-ui-express": "^4.0.2"
+    "swagger-ui-express": "^4.0.2",
+    "api-gateway-swagger-json": "file:./swagger.json"
   }
 }
