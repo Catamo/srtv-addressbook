@@ -2,6 +2,7 @@
 
 docker-compose push;
 
+cd ./api-gateway
 docker push registry.heroku.com/srtv-addressbook-catamo-victor/web;
 heroku container:release web --app srtv-addressbook-catamo-victor
 
