@@ -15,6 +15,7 @@ before_install:
 
 install:
 - docker-compose build
+- docker-compose -f docker-compose.heroku.yml build
 
 script: "true"
 
