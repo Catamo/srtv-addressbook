@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "mocha -R spec src/**/*.spec.js",
-    "start": "node src/index.js",
+    "start": "npm run swagger && node src/index.js",
     "lint": "standard --verbose | snazzy",
     "node-debug": "DEBUG=express* node src/index.js",
     "chrome-debug": "node --debug-brk --inspect src/index.js",
@@ -62,7 +62,6 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "spdy": "^3.4.4",
-    "swagger-ui-express": "^4.0.2",
-    "api-gateway-swagger-json": "file:./swagger.json"
+    "swagger-ui-express": "^4.0.2"
   }
 }

@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const connect = (options, mediator) => {
   mediator.once("boot.ready", () => {
-    mongoose.connect(options.server_url, {
+    console.log(options.serverUrl)
+    mongoose.connect(options.serverUrl, {
       useNewUrlParser: true
     });
 

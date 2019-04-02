@@ -28,6 +28,7 @@ services:
       - rabbitmq
     restart: on-failure
     command: npm run start
+    env_file: ./api-gateway/.env
 
   users_service:
     image: catamo/srtv-addressbook_users-service
@@ -42,6 +43,7 @@ services:
       - rabbitmq
     restart: on-failure
     command: npm run start
+    env_file: ./users-service/.env
 
   contacts_service:
     image: catamo/srtv-addressbook_contacts-service
@@ -56,3 +58,4 @@ services:
       - rabbitmq
     restart: on-failure
     command: npm run start 
+    env_file: ./contacts-service/.env
