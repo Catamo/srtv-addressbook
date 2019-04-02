@@ -22,10 +22,9 @@ deploy:
     script: 
       docker-compose push;
       docker-compose -f docker-compose-heroku.yml build;
-      ls;
-      sh ./api-gateway/deploy_heroku.sh;
-      sh ./contacts-service/deploy_heroku.sh;
-      sh ./users-service/deploy_heroku.sh;
+      sh chmod +x ./api-gateway/deploy_heroku.sh | sh ./api-gateway/deploy_heroku.sh;
+      sh chmod +x ./contacts-service/deploy_heroku.sh | sh ./contacts-service/deploy_heroku.sh;
+      sh chmod +x ./users-service/deploy_heroku.sh | sh ./users-service/deploy_heroku.sh;
     on:
       branch: master
     skip_cleanup: true
