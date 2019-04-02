@@ -2,7 +2,7 @@
 const { EventEmitter } = require("events");
 const test = require("assert");
 const mongo = require("./mongo");
-const { dbSettings } = require(".");
+const { dbSettings } = require("../../config");
 
 describe("Mongo Connection", () => {
   it("should emit db Object with an EventEmitter", done => {
