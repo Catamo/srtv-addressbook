@@ -11,6 +11,7 @@ services:
 before_install:
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  - heroku plugins:install @heroku-cli/plugin-container-registry
   # login to docker registries (dockerhub + heroku)
   - docker login -u _ -p "$HEROKU_TOKEN" registry.heroku.com
 
