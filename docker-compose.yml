@@ -16,6 +16,7 @@ services:
       driver: none
   
   api_gateway:
+    image: catamo/srtv-addressbook_api-gateway
     build: ./api-gateway
     container_name: api_gateway
     volumes:
@@ -29,6 +30,7 @@ services:
     command: npm run start
 
   users_service:
+    image: catamo/srtv-addressbook_users-service
     build: ./users-service
     container_name: ms_users
     volumes:
@@ -42,6 +44,7 @@ services:
     command: npm run start
 
   contacts_service:
+    image: catamo/srtv-addressbook_contacts-service
     build: ./contacts-service
     container_name: ms_contacts
     volumes:

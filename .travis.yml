@@ -1,6 +1,7 @@
 os: linux
 dist: trusty
 sudo: required
+sudo: required
 
 language: node_js
 node_js:
@@ -9,11 +10,7 @@ services:
   - docker
 
 before_install:
-  # install heroku CLI
-  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
-  - heroku plugins:install @heroku-cli/plugin-container-registry
-  # login to docker registries (dockerhub + heroku)
-  - docker login -u _ -p "$HEROKU_TOKEN" registry.heroku.com
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 install:
 - docker-compose build
@@ -22,7 +19,12 @@ script: "true"
 
 deploy:
   - provider: script
-    script: bash deploy.sh
+    script: 
+      docker-compose push;
+      docker-compose -f docker-compose-heroku.yml build;
+      sh ./api-gateway/deploy_heroku.sh;
+      sh ./contacts-service/deploy_heroku.sh;
+      sh ./users-service/deploy_heroku.sh;
     on:
       branch: master
     skip_cleanup: true
