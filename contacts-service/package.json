@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "mocha -R spec src/**/*.spec.js",
-    "start": "node -r dotenv/config src/index.js",
+    "start": "node src/index.js",
     "lint": "standard --verbose | snazzy",
     "debug": "ndb --inspect src/index.js",
     "node-debug": "DEBUG=express* node src/index.js",
