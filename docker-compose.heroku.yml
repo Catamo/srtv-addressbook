@@ -2,7 +2,7 @@ version: "3"
 
 services:      
   api_gateway:
-    image: registry.heroku.com/srtv-addressbook-catamo-victor/api
+    image: registry.heroku.com/srtv-addressbook-catamo-victor/web
     build: ./api-gateway
     container_name: api_gateway
     volumes:
@@ -11,7 +11,7 @@ services:
     command: npm run start
 
   users_service:
-    image: registry.heroku.com/srtv-addressbook-msusers/users_worker
+    image: registry.heroku.com/srtv-addressbook-msusers/worker
     build: ./users-service
     container_name: ms_users
     volumes:
@@ -20,7 +20,7 @@ services:
     command: npm run start
 
   contacts_service:
-    image: registry.heroku.com/srtv-addressbook-mscontacts/contacts_worker
+    image: registry.heroku.com/srtv-addressbook-mscontacts/worker
     build: ./contacts-service
     container_name: ms_contacts
     volumes:
