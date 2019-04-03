@@ -17,7 +17,7 @@
     "node-debug": "DEBUG=express* node src/index.js",
     "chrome-debug": "node --debug-brk --inspect src/index.js",
     "int-test": "node_modules/.bin/mocha integration-test/index.js",
-    "swagger": "js-yaml ./api/swagger/swagger.yaml > swagger.json"
+    "swagger": "js-yaml api/swagger/swagger.yaml > swagger.json"
   },
   "keywords": [
     "express",
