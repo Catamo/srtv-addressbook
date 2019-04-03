@@ -1,7 +1,7 @@
-FROM lambci/lambda:build-nodejs6.10 
+FROM node:8.15.1-alpine 
 
 # Create a new user group and user to our new container and avoid the root user
-RUN groupadd --system appgroup && useradd --system appuser -G appgroup
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 ENV HOME=/home/appuser
 
@@ -13,6 +13,7 @@ RUN chown -R appuser:appgroup $HOME/* /usr/local/
 
 WORKDIR $HOME/app
 RUN npm cache clear --force . && \
+    npm cache verify && \
     npm install --silent --progress=false --production
 
 RUN chown -R appuser:appgroup $HOME/*
