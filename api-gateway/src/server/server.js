@@ -1,6 +1,7 @@
 const express = require("express");
 const api = require("../api");
 const passport = require("../security/passport");
+const createMiddleware = require("swagger-express-middleware");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = require("../../swagger");
@@ -14,17 +15,32 @@ const start = container => {
     }
 
     const app = express();
-
     app.use(express.json());
 
-    // const server = spdy.createServer(ssl, app)
-    //   .listen(port, () => resolve(server))
-    passport(container);
-    api(app, container);
+    createMiddleware(swaggerDoc, app, function(err, middleware) {
+      if (err) {
+        reject(err);
+      }
 
-    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+      app.use(
+        middleware.metadata(),
+        middleware.parseRequest(),
+        middleware.validateRequest()
+      );
 
-    const server = app.listen(port, () => resolve(server));
+      passport(container);
+      api(app, container);
+
+      // Add a custom error handler that returns errors as HTML
+      app.use((err, req, res, next) => {
+        res.status(err.status);
+        res.send(err.message.replace(/\\n/g, '\n'));
+      });
+
+      app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
+      const server = app.listen(port, () => resolve(server));
+    });
   });
 };
 

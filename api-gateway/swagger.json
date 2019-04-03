@@ -12,7 +12,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "basePath": "/",
+  "basePath": "",
   "tags": [
     {
       "name": "authentication",
@@ -49,15 +49,12 @@
         "parameters": [
           {
             "in": "body",
-            "name": "email",
-            "description": "An email that indentifies the user",
-            "required": true
-          },
-          {
-            "in": "body",
-            "name": "password",
-            "description": "The password of the user",
-            "required": true
+            "name": "user",
+            "description": "Email and Password of the user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
@@ -90,7 +87,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "body",
+            "name": "user",
             "description": "Email and Password of the user",
             "required": true,
             "schema": {
@@ -129,7 +126,7 @@
         "parameters": [
           {
             "in": "body",
-            "name": "body",
+            "name": "contact",
             "description": "Data of the user contact",
             "required": true,
             "schema": {
@@ -186,6 +183,10 @@
     },
     "User": {
       "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
       "properties": {
         "id": {
           "type": "integer",
@@ -204,6 +205,9 @@
     },
     "Contact": {
       "type": "object",
+      "required": [
+        "email"
+      ],
       "properties": {
         "id": {
           "type": "integer",

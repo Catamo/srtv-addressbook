@@ -7,10 +7,15 @@ module.exports = (app, container) => {
   const amqpQueues = container.resolve("amqpQueues");
 
   app.post("/users", (req, res, next) => {
+    let user = {
+      email: req.body.email,
+      password: req.body.password
+    }
+
     amqpClient
       .sendRPCMessage(
         amqpChannel,
-        JSON.stringify(req.body),
+        JSON.stringify(user),
         amqpQueues.userRegisterQueue
       )
       .then(msg => {
@@ -23,7 +28,12 @@ module.exports = (app, container) => {
     "/users/:id/contacts",
     passport.authenticate("jwt", { session: false }),
     (req, res, next) => {
-      let contact = req.body;
+      let contact = { 
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber
+      };
       contact.relatedUserId = req.params.id;
 
       amqpClient
