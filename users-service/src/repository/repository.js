@@ -12,6 +12,7 @@ const repository = connection => {
             )
           );
         }
+        user.password = '';
         resolve(user);
       };
 

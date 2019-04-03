@@ -46,10 +46,6 @@ module.exports = container => {
         secretOrKey: tokenSecret
       },
       (jwtPayload, done) => {
-        if (Date.now() > jwtPayload.expires) {
-          return done("jwt expired");
-        }
-
         return done(null, jwtPayload);
       }
     )
