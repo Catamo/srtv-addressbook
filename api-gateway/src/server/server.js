@@ -3,7 +3,7 @@ const api = require("../api");
 const passport = require("../security/passport");
 
 const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("../../swagger.json");
+const swaggerDoc = require("../../swagger");
 
 const start = container => {
   return new Promise((resolve, reject) => {
