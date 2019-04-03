@@ -27,7 +27,7 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
-    command: npm run start
+    command: npm run start:dev
 
   users_service:
     image: catamo/srtv-addressbook_users-service
@@ -41,7 +41,7 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
-    command: npm run start
+    command: npm run start:dev
 
   contacts_service:
     image: catamo/srtv-addressbook_contacts-service
@@ -55,4 +55,4 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
-    command: npm run start 
+    command: npm run start:dev
