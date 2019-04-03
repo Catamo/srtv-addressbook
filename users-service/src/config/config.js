@@ -6,6 +6,4 @@ const amqpSettings = {
   url: process.env.BROKER_URL
 };
 
-console.log({ dbSettings, amqpSettings })
-
 module.exports = Object.assign({}, { dbSettings, amqpSettings });
