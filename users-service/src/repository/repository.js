@@ -12,7 +12,7 @@ const repository = connection => {
             )
           );
         }
-        user.password = '';
+        user.password = '[hidden]';
         resolve(user);
       };
 
