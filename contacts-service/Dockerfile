@@ -12,7 +12,7 @@ COPY src/ $HOME/app/src
 RUN chown -R appuser:appgroup $HOME/* /usr/local/
 
 WORKDIR $HOME/app
-RUN npm cache clear --force . && \
+RUN npm cache clean --force && \
     npm cache verify && \
     npm install --silent --progress=false --production
 
