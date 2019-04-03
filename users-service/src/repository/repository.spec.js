@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { EventEmitter } = require("events");
 const repository = require("./repository");
-const mongo = require("../config/mongo");
+const database = require("../config/database");
 const { dbSettings } = require("../config/config");
 
 describe("Repository", () => {
@@ -9,14 +9,18 @@ describe("Repository", () => {
     repository.connect({}).should.be.a.Promise();
   });
 
-  it("should get user by id", done => {
+  it("should register a new user", done => {
     const mediator = new EventEmitter();
 
     mediator.on("db.ready", db => {
       repository
         .connect(db)
         .then(repo => {
-          return repo.getUserById("1");
+          const user = {
+            email: 'test@srtv.com',
+            password: 'srtv2019'
+          }
+          return repo.registerUser(user);
         })
         .then(user => {
           console.log(user);
@@ -34,7 +38,7 @@ describe("Repository", () => {
       console.log(err);
     });
 
-    mongo.connect(dbSettings, mediator);
+    database.connect(dbSettings, mediator);
 
     mediator.emit("boot.ready");
   });

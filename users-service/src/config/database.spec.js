@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 const { EventEmitter } = require("events");
 const test = require("assert");
-const mongo = require("./mongo");
+const database = require("./database");
 const { dbSettings } = require(".");
 
 describe("Mongo Connection", () => {
@@ -9,11 +9,11 @@ describe("Mongo Connection", () => {
     const mediator = new EventEmitter();
 
     mediator.on("db.ready", db => {
-      db.admin().listDatabases((err, dbs) => {
+      db.listCollections().toArray((err, collections) => {
         test.equal(null, err);
-        test.ok(dbs.databases.length > 0);
-        console.log(dbs.databases);
-        db.close();
+        test.ok(collections.length > 0);
+        console.log(collections);
+        db.disconnect();
         done();
       });
     });
@@ -22,7 +22,7 @@ describe("Mongo Connection", () => {
       console.log(err);
     });
 
-    mongo.connect(dbSettings, mediator);
+    database.connect(dbSettings, mediator);
 
     mediator.emit("boot.ready");
   });

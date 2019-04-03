@@ -16,9 +16,9 @@ process.on("uncaughtRejection", (err, promise) => {
 });
 
 mediator.on("db.ready", db => {
-  repository.connect(db).then(connection => {
+  repository.connect(db).then(repo => {
     console.log("Connected. Starting Users Worker");
-    amqp(config.amqpSettings, connection);
+    amqp(config.amqpSettings, repo);
   });
 });
 
