@@ -1,4 +1,4 @@
-const { addQueueConsumer } = require("../amqp.server.utils");
+const { addQueueConsumer } = require("srtv-amqp-utils").ServerUtils;
 
 module.exports = (workerChannel, repo) => {
   addQueueConsumer(workerChannel, "users.register", (message, callback) => {

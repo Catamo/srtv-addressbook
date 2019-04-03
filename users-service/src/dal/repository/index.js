@@ -1,5 +1,5 @@
-const { User } = require("../mongo/models/");
-const { encrypt, compareHash } = require("../utils/encryption");
+const { User } = require("./mongoose-models");
+const { encrypt, compareHash } = require("srtv-encryption");
 
 const repository = connection => {
   const registerUser = user => {

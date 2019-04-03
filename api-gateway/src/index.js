@@ -1,6 +1,6 @@
 const { EventEmitter } = require("events");
 const server = require("./server/server");
-const amqp = require("./amqp/amqp.client.utils");
+const { createClientChannel } = require("srtv-amqp-utils").ClientUtils;
 const di = require("./config");
 const mediator = new EventEmitter();
 
@@ -19,7 +19,7 @@ mediator.on("di.ready", container => {
   console.log("Connected. Starting Server");
   const amqpSettings = container.resolve("amqpSettings");
 
-  amqp.createClient(amqpSettings).then(amqpChannel => {
+  createClientChannel(amqpSettings.url).then(amqpChannel => {
     container.registerValue({ amqpChannel });
 
     return server.start(container).then(app => {

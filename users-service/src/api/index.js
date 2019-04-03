@@ -1,8 +1,8 @@
 const usersWorkers = require("./workers/users");
-const serverHelpers = require("./amqp.server.utils");
+const { createServerChannel } = require("srtv-amqp-utils").ServerUtils;
 
 module.exports = (settings, repo) => {
-  serverHelpers.createChannel(settings).then(channel => {
+  createServerChannel(settings.url).then(channel => {
     usersWorkers(channel, repo);
   });
 };

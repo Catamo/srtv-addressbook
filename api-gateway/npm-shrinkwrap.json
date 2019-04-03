@@ -6583,6 +6583,105 @@
       "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz",
       "integrity": "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw="
     },
+    "srtv-amqp-utils": {
+      "version": "file:../local-modules/srtv-amqp-utils",
+      "requires": {
+        "amqplib": "^0.5.3",
+        "uuid": "^3.3.2"
+      },
+      "dependencies": {
+        "amqplib": {
+          "version": "0.5.3",
+          "bundled": true,
+          "requires": {
+            "bitsyntax": "~0.1.0",
+            "bluebird": "^3.5.2",
+            "buffer-more-ints": "~1.0.0",
+            "readable-stream": "1.x >=1.1.9",
+            "safe-buffer": "~5.1.2",
+            "url-parse": "~1.4.3"
+          }
+        },
+        "bitsyntax": {
+          "version": "0.1.0",
+          "bundled": true,
+          "requires": {
+            "buffer-more-ints": "~1.0.0",
+            "debug": "~2.6.9",
+            "safe-buffer": "~5.1.2"
+          }
+        },
+        "bluebird": {
+          "version": "3.5.4",
+          "bundled": true
+        },
+        "buffer-more-ints": {
+          "version": "1.0.0",
+          "bundled": true
+        },
+        "core-util-is": {
+          "version": "1.0.2",
+          "bundled": true
+        },
+        "debug": {
+          "version": "2.6.9",
+          "bundled": true,
+          "requires": {
+            "ms": "2.0.0"
+          }
+        },
+        "inherits": {
+          "version": "2.0.3",
+          "bundled": true
+        },
+        "isarray": {
+          "version": "0.0.1",
+          "bundled": true
+        },
+        "ms": {
+          "version": "2.0.0",
+          "bundled": true
+        },
+        "querystringify": {
+          "version": "2.1.1",
+          "bundled": true
+        },
+        "readable-stream": {
+          "version": "1.1.14",
+          "bundled": true,
+          "requires": {
+            "core-util-is": "~1.0.0",
+            "inherits": "~2.0.1",
+            "isarray": "0.0.1",
+            "string_decoder": "~0.10.x"
+          }
+        },
+        "requires-port": {
+          "version": "1.0.0",
+          "bundled": true
+        },
+        "safe-buffer": {
+          "version": "5.1.2",
+          "bundled": true
+        },
+        "string_decoder": {
+          "version": "0.10.31",
+          "bundled": true
+        },
+        "url-parse": {
+          "version": "1.4.4",
+          "bundled": true,
+          "requires": {
+            "querystringify": "^2.0.0",
+            "requires-port": "^1.0.0"
+          }
+        },
+        "uuid": {
+          "version": "3.3.2",
+          "bundled": true
+        }
+      }
+    },
     "standard": {
       "version": "8.6.0",
       "resolved": "https://registry.npmjs.org/standard/-/standard-8.6.0.tgz",

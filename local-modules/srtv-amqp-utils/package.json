@@ -1,0 +1,15 @@
+{
+  "name": "srtv-amqp-utils",
+  "version": "1.0.0",
+  "description": "Custom helpers to make easier the interaction with AMQP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "victor.catamo.rojas@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.3",
+    "uuid": "^3.3.2"
+  }
+}

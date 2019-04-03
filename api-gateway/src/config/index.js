@@ -4,7 +4,9 @@ const {
   authSettings,
   amqpQueues
 } = require("./config");
+
 const { initDI } = require("./di");
+
 const init = initDI.bind(null, {
   amqpSettings,
   serverSettings,

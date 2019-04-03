@@ -1,25 +1,24 @@
 const amqp = require("amqplib");
 const EventEmitter = require("events");
-
-// this queue name will be attached to "replyTo" property on producer's message,
-// and the consumer will use it to know which queue to the response back to the producer
-const REPLY_QUEUE = "amq.rabbitmq.reply-to";
-const RETRY_INTERVAL = 1000;
-const MAX_RETRY_ATTEMPTS = 10;
+const {
+  REPLY_QUEUE,
+  RETRY_INTERVAL,
+  MAX_RETRY_ATTEMPTS
+} = require("./amqp.constants");
 
 /**
- * Create amqp channel and return back as a promise
- * @params {Object} setting
- * @params {String} setting.url
+ * Create amqp channel and return back as a promise.
+ * It waits for a reply.
+ * @params {String} urlAmqp - rabbit-mq url
  * @returns {Promise} - return amqp channel
  */
-const createClient = settings =>
+const createClientChannel = urlAmqp =>
   new Promise((resolve, reject) => {
     let retriesLeft = MAX_RETRY_ATTEMPTS;
 
     const connect = () => {
       amqp
-        .connect(settings.url)
+        .connect(urlAmqp)
         .then(conn => {
           conn.createChannel().then(channel => {
             channel.responseEmitter = new EventEmitter();
@@ -79,5 +78,4 @@ function generateUuid() {
   );
 }
 
-module.exports.createClient = createClient;
-module.exports.sendRPCMessage = sendRPCMessage;
+module.exports = Object.assign({}, { createClientChannel, sendRPCMessage });

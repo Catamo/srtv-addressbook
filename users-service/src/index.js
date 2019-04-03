@@ -1,6 +1,6 @@
 const { EventEmitter } = require("events");
-const amqp = require("./amqp");
-const repository = require("./repository/repository");
+const api = require("./api");
+const { repository, database } = require("./dal");
 const config = require("./config/");
 const mediator = new EventEmitter();
 
@@ -18,7 +18,7 @@ process.on("uncaughtRejection", (err, promise) => {
 mediator.on("db.ready", db => {
   repository.connect(db).then(repo => {
     console.log("Connected. Starting Users Worker");
-    amqp(config.amqpSettings, repo);
+    api(config.amqpSettings, repo);
   });
 });
 
@@ -26,6 +26,6 @@ mediator.on("db.error", err => {
   console.error(err);
 });
 
-config.db.connect(config.dbSettings, mediator);
+database.connect(config.dbSettings, mediator);
 
 mediator.emit("boot.ready");
