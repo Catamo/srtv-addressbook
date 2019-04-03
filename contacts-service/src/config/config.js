@@ -1,10 +1,18 @@
 const dbSettings = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
   databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID
+  serviceAccount: {
+    type: process.env.FIREBASE_ADMINSDK_TYPE,
+    project_id: process.env.FIREBASE_ADMINSDK_PROJECT_ID,
+    private_key_id: process.env.FIREBASE_ADMINSDK_PRIVATE_KEY_ID,
+    private_key: process.env.FIREBASE_ADMINSDK_PRIVATE_KEY,
+    client_email: process.env.FIREBASE_ADMINSDK_CLIENT_EMAIL,
+    client_id: process.env.FIREBASE_ADMINSDK_CLIENT_ID,
+    auth_uri: process.env.FIREBASE_ADMINSDK_AUTH_URI,
+    token_uri: process.env.FIREBASE_ADMINSDK_TOKEN_URI,
+    auth_provider_x509_cert_url:
+      process.env.FIREBASE_ADMINSDK_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.FIREBASE_ADMINSDK_CLIENT_X509_CERT_URL
+  }
 };
 
 const amqpSettings = {

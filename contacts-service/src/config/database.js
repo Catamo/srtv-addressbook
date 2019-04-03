@@ -2,11 +2,9 @@ let admin = require("firebase-admin");
 
 const connect = (options, mediator) => {
   mediator.once("boot.ready", () => {
-    let serviceAccount = require("../../serviceAccountKey.json");
-
     try {
       admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
+        credential: admin.credential.cert(options.serviceAccount),
         databaseURL: options.databaseURL
       });
 

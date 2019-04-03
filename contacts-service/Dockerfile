@@ -5,7 +5,7 @@ RUN groupadd --system appgroup && useradd --system appuser -G appgroup
 
 ENV HOME=/home/appuser
 
-COPY package.json npm-shrinkwrap.json serviceAccountKey.json $HOME/app/
+COPY package.json npm-shrinkwrap.json $HOME/app/
 
 COPY src/ $HOME/app/src
 
