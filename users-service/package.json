@@ -50,7 +50,7 @@
     "mongodb": "^2.2.36",
     "mongoose": "^5.4.20",
     "morgan": "^1.9.1",
-    "srtv-amqp-utils": "file:../local-modules/srtv-amqp-utils",
-    "srtv-encryption": "file:../local-modules/srtv-encryption"
+    "srtv-amqp-utils": "https://github.com/Catamo/srtv-addressbook/raw/master/local-modules/srtv-amqp-utils.tar.gz",
+    "srtv-encryption": "https://github.com/Catamo/srtv-addressbook/raw/master/local-modules/srtv-encryption.tar.gz"
   }
 }
