@@ -3,6 +3,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const { sendRPCMessage } = require("srtv-amqp-utils").ClientUtils;
+const jwt = require("jsonwebtoken");
 
 module.exports = container => {
   const { tokenSecret } = container.resolve("authSettings");
@@ -15,16 +16,18 @@ module.exports = container => {
         usernameField: "email",
         passwordField: "password"
       },
-      (username, password, done) => {
-        let userCredentials = JSON.stringify({ email: username, password });
-        let queueName = userValidateCredentialsQueue;
+      (email, password, done) => {
+        const userCredentials = JSON.stringify({ email, password });
+        const queueName = userValidateCredentialsQueue;
 
         sendRPCMessage(amqpChannel, userCredentials, queueName)
           .then(msg => {
-            let { err, result } = JSON.parse(msg);
+            const { err, result } = JSON.parse(msg);
 
-            if (result.userVerified) {
-              return done(err, userCredentials);
+            if (err) {
+              return done(err);
+            } else if (result.userVerified) {
+              return done(null, { email, password: "[hidden]" });
             } else {
               return done("Incorrect Username / Password");
             }

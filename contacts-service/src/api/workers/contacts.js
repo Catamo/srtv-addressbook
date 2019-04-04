@@ -10,13 +10,12 @@ module.exports = (workerChannel, repo) => {
       relatedUserEmail: msg.relatedUserEmail
     };
 
-    repo
-      .addContact(contact)
-      .then(dbContact => {
+    try {
+      repo.addContact(contact).then(dbContact => {
         callback(null, dbContact);
-      })
-      .catch(err => {
-        callback(err);
       });
+    } catch (err) {
+      callback(err);
+    }
   });
 };

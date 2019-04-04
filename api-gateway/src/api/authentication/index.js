@@ -7,28 +7,23 @@ module.exports = (app, container) => {
     "authSettings"
   );
 
-  app.post("/authentication", (req, res, next) => {
-    passport.authenticate("local", { session: false }, (errAuth, user) => {
-      if (errAuth || !user) {
-        res.status(status.BAD_REQUEST).json({ errAuth });
-        return;
-      }
+  app.post(
+    "/authentication",
+    passport.authenticate("local", { session: false }),
+    (req, res) => {
+      const payload = { email: req.user.email };
 
-      const payload = {
-        username: user.email
-      };
       req.login(payload, { session: false }, errLogin => {
-        
         if (errLogin) {
           res.status(status.BAD_REQUEST).send({ error: errLogin });
           return;
         }
 
-        const token = jwt.sign({ email: user.email }, tokenSecret, {
+        const token = jwt.sign(payload, tokenSecret, {
           expiresIn: tokenExpirationSeconds
         });
-        res.status(status.OK).json({ userEmail: user.email, token });
+        res.status(status.OK).json({ userEmail: req.user.email, token });
       });
-    })(req, res);
-  });
+    }
+  );
 };

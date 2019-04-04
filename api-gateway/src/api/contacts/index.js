@@ -20,8 +20,12 @@ module.exports = (app, container) => {
 
       sendRPCMessage(amqpChannel, contact, amqpQueues.contactCreateQueue).then(
         msg => {
-          console.log(JSON.parse(msg))
-          const { result } = JSON.parse(msg);
+          const { err, result } = JSON.parse(msg);
+          if (err) {
+            res.status(status.INTERNAL_SERVER_ERROR).json({error: err});
+            return;
+          }
+
           res.status(status.CREATED).json(result);
         }
       );
