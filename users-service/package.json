@@ -25,7 +25,7 @@
     "metric": "nodejs-dashboard -- node -r nodejs-dashboard src/index.js"
   },
   "keywords": [
-    "express",
+    "amqp",
     "mongodb",
     "docker",
     "microservice"

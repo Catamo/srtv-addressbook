@@ -65,12 +65,12 @@ const addQueueConsumer = (ch, queueName, consumerMethod) => {
   ch.consume(queueName, msg => {
     //the parsing/stringify logic is centralized
     let content = JSON.parse(msg.content);
-    consumerMethod(content, value => {
+    consumerMethod(content, (err, result) => {
       //when the callback is executed it sends the argument
       //to the replyTo queue, where the client awaits a response
       ch.sendToQueue(
         msg.properties.replyTo,
-        new Buffer(JSON.stringify(value)),
+        new Buffer(JSON.stringify({err, result})),
         { correlationId: msg.properties.correlationId }
       );
 

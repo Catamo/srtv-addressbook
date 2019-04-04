@@ -39,9 +39,11 @@ module.exports = container => {
     new JWTStrategy(
       {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: tokenSecret
+        secretOrKey: tokenSecret,
+        passReqToCallback: true
       },
-      (jwtPayload, done) => {
+      (req, jwtPayload, done) => {
+        req.userEmail = jwtPayload.email;
         return done(null, jwtPayload);
       }
     )

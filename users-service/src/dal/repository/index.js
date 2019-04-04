@@ -2,8 +2,8 @@ const { User } = require("./mongoose-models");
 const { encrypt, compareHash } = require("srtv-encryption");
 
 const repository = connection => {
-  const registerUser = user => {
-    return new Promise((resolve, reject) => {
+  const registerUser = user =>
+    new Promise((resolve, reject) => {
       const sendUser = (err, user) => {
         if (err) {
           reject(
@@ -11,21 +11,27 @@ const repository = connection => {
               `An error occured while creating the new user, err: ${err}`
             )
           );
+          return;
         }
-        user.password = '[hidden]';
+        user.password = "[hidden]";
         resolve(user);
       };
 
-      encrypt(user.password).then(hash => {
-        let newUser = new User(user);
-        newUser.password = hash;
-        newUser.save(sendUser);
+      User.findOne({ email: user.email }).then(dbUser => {
+        if (dbUser) {
+          reject("The email entered is already registered");
+          return;
+        }
+        encrypt(user.password).then(hash => {
+          let newUser = new User(user);
+          newUser.password = hash;
+          newUser.save(sendUser);
+        });
       });
     });
-  };
 
-  const verifyUserCredentials = userCredentials => {
-    return new Promise((resolve, reject) => {
+  const verifyUserCredentials = userCredentials =>
+    new Promise((resolve, reject) => {
       const verifyUser = (err, user) => {
         if (err) {
           reject(
@@ -42,7 +48,6 @@ const repository = connection => {
 
       User.findOne({ email: userCredentials.email }, verifyUser);
     });
-  };
 
   const disconnect = () => {
     connection.disconnect();

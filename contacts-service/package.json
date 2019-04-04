@@ -26,8 +26,8 @@
     "swagger:edit": "swagger project edit"
   },
   "keywords": [
-    "express",
-    "mongodb",
+    "amqp",
+    "firebase",
     "docker",
     "microservice"
   ],

@@ -1,5 +1,5 @@
 const { EventEmitter } = require("events");
-const server = require("./server/server");
+const server = require("./server");
 const { createClientChannel } = require("srtv-amqp-utils").ClientUtils;
 const di = require("./config");
 const mediator = new EventEmitter();

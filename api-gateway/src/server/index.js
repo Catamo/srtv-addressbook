@@ -17,6 +17,8 @@ const start = container => {
     const app = express();
     app.use(express.json());
 
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+
     createMiddleware(swaggerDoc, app, function(err, middleware) {
       if (err) {
         reject(err);
@@ -36,8 +38,6 @@ const start = container => {
         res.status(err.status);
         res.send(err.message.replace(/\\n/g, '\n'));
       });
-
-      app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
       const server = app.listen(port, () => resolve(server));
     });

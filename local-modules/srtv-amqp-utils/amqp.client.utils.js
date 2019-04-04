@@ -25,11 +25,12 @@ const createClientChannel = urlAmqp =>
             channel.responseEmitter.setMaxListeners(0);
             channel.consume(
               REPLY_QUEUE,
-              msg =>
+              msg => {
                 channel.responseEmitter.emit(
                   msg.properties.correlationId,
                   msg.content
-                ),
+                );
+              },
               { noAck: true }
             );
             resolve(channel);

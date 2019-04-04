@@ -7,9 +7,14 @@ module.exports = (workerChannel, repo) => {
       password: message.password
     };
 
-    repo.registerUser(user).then(user => {
-      callback(user);
-    });
+    repo
+      .registerUser(user)
+      .then(user => {
+        callback(null, user);
+      })
+      .catch(err => {
+        callback(err);
+      });
   });
 
   addQueueConsumer(
@@ -21,9 +26,14 @@ module.exports = (workerChannel, repo) => {
         password: message.password
       };
 
-      repo.verifyUserCredentials(user).then(userVerified => {
-        callback({ userVerified });
-      });
+      repo
+        .verifyUserCredentials(user)
+        .then(userVerified => {
+          callback(null, { userVerified });
+        })
+        .catch(err => {
+          callback(err);
+        });
     }
   );
 };

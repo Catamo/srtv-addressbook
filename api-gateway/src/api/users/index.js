@@ -1,5 +1,4 @@
 const status = require("http-status");
-const passport = require("passport");
 const { sendRPCMessage } = require("srtv-amqp-utils").ClientUtils;
 
 module.exports = (app, container) => {
@@ -14,30 +13,13 @@ module.exports = (app, container) => {
 
     sendRPCMessage(amqpChannel, user, amqpQueues.userRegisterQueue).then(
       msg => {
-        const result = JSON.parse(msg);
+        const { err, result } = JSON.parse(msg);
+        if (err) {
+          res.status(status.UNPROCESSABLE_ENTITY).json(err);
+          return;
+        }
         res.status(status.CREATED).json(result);
       }
     );
   });
-
-  app.post(
-    "/users/:id/contacts",
-    passport.authenticate("jwt", { session: false }),
-    (req, res, next) => {
-      let contact = JSON.stringify({
-        name: req.body.name,
-        surname: req.body.surname,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-        relatedUserId: req.params.id
-      });
-
-      sendRPCMessage(amqpChannel, contact, amqpQueues.contactCreateQueue).then(
-        msg => {
-          const result = JSON.parse(msg);
-          res.status(status.CREATED).json(result);
-        }
-      );
-    }
-  );
 };
