@@ -13,6 +13,7 @@ module.exports = (app, container) => {
         res.status(status.BAD_REQUEST).json({ error });
         return;
       }
+      console.log(error, user);
       const payload = {
         username: user.email
       };
@@ -20,7 +21,7 @@ module.exports = (app, container) => {
         if (error) {
           res.status(status.BAD_REQUEST).send({ error });
         }
-        
+
         const token = jwt.sign({ email: user.email }, tokenSecret, {
           expiresIn: tokenExpirationSeconds
         });
