@@ -47,7 +47,6 @@
     "firebase-admin": "^7.2.0",
     "helmet": "^3.16.0",
     "http-status": "^0.2.5",
-    "morgan": "^1.9.1",
-    "srtv-amqp-utils": "https://github.com/Catamo/srtv-addressbook/raw/master/srtv-amqp-utils.tar.gz"
+    "morgan": "^1.9.1"
   }
 }
