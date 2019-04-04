@@ -21,9 +21,9 @@ module.exports = container => {
 
         sendRPCMessage(amqpChannel, userCredentials, queueName)
           .then(msg => {
-            let { result } = JSON.parse(msg);
+            let { err, result } = JSON.parse(msg);
             if (result.userVerified) {
-              return done(null, userCredentials);
+              return done(err, userCredentials);
             } else {
               return done("Incorrect Username / Password");
             }
