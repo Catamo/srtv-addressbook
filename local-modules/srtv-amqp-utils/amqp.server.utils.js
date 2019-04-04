@@ -26,7 +26,7 @@ const createServerChannel = urlAmqp =>
               connect();
             }, RETRY_INTERVAL);
           } else {
-            reject(new Error("Retry attempts exhausted"));
+            reject("Retry attempts exhausted");
           }
         });
     };
@@ -70,7 +70,7 @@ const addQueueConsumer = (ch, queueName, consumerMethod) => {
       //to the replyTo queue, where the client awaits a response
       ch.sendToQueue(
         msg.properties.replyTo,
-        new Buffer(JSON.stringify({err, result})),
+        new Buffer(JSON.stringify({err: err, result: result})),
         { correlationId: msg.properties.correlationId }
       );
 

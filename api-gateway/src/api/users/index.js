@@ -15,7 +15,7 @@ module.exports = (app, container) => {
       msg => {
         const { err, result } = JSON.parse(msg);
         if (err) {
-          res.status(status.UNPROCESSABLE_ENTITY).json(err);
+          res.status(status.UNPROCESSABLE_ENTITY).json({ error: err });
           return;
         }
         res.status(status.CREATED).json(result);

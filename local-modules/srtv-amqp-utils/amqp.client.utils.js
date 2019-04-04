@@ -43,7 +43,7 @@ const createClientChannel = urlAmqp =>
               connect();
             }, RETRY_INTERVAL);
           } else {
-            reject(new Error("Retry attempts exhausted"));
+            reject("Retry attempts exhausted");
           }
         });
     };

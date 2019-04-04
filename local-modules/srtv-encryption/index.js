@@ -1,13 +1,11 @@
 const bcrypt = require("bcryptjs");
 
-const encrypt = value => {
+const encrypt = (value, hashingRounds) => {
   return new Promise((resolve, reject) => {
-    bcrypt.genSalt(parseInt(process.env.HASHING_ROUNDS), (errSalt, salt) => {
+    bcrypt.genSalt(hashingRounds, (errSalt, salt) => {
       bcrypt.hash(value, salt, (errHash, hash) => {
         if (errHash) {
-          reject(
-            new Error("An error occured while encrypting value, err:" + errHash)
-          );
+          reject("An error occured while encrypting value, err:" + errHash);
         }
         resolve(hash);
       });
@@ -19,9 +17,7 @@ const compareHash = (value, hash) => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(value, hash, (err, match) => {
       if (err) {
-        reject(
-          new Error("An error occured while comparing values, err:" + err)
-        );
+        reject("An error occured while comparing values, err:" + err);
       }
       resolve(match);
     });

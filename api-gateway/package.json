@@ -15,7 +15,7 @@
     "start": "node src/index.js",
     "start:dev": "node -r dotenv/config src/index.js",
     "lint": "standard --verbose | snazzy",
-    "int-test": "node_modules/.bin/mocha integration-test/index.js",
+    "int-test": "node_modules/.bin/mocha integration-test/index.js --delay",
     "swagger": "js-yaml swagger.yaml > swagger.json"
   },
   "keywords": [

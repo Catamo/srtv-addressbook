@@ -1,16 +1,12 @@
 const { User } = require("./mongoose-models");
 const { encrypt, compareHash } = require("srtv-encryption");
 
-const repository = connection => {
+const repository = (connection, encryptionOptions) => {
   const registerUser = user =>
     new Promise((resolve, reject) => {
       const sendUser = (err, user) => {
         if (err) {
-          reject(
-            new Error(
-              `An error occured while creating the new user, err: ${err}`
-            )
-          );
+          reject(`An error occured while creating the new user, err: ${err}`);
           return;
         }
         user.password = "[hidden]";
@@ -22,11 +18,13 @@ const repository = connection => {
           reject("The email entered is already registered");
           return;
         }
-        encrypt(user.password).then(hash => {
-          let newUser = new User(user);
-          newUser.password = hash;
-          newUser.save(sendUser);
-        });
+        encrypt(user.password, parseInt(encryptionOptions.hashingRounds)).then(
+          hash => {
+            let newUser = new User(user);
+            newUser.password = hash;
+            newUser.save(sendUser);
+          }
+        );
       });
     });
 
@@ -35,9 +33,7 @@ const repository = connection => {
       const verifyUser = (err, user) => {
         if (err) {
           reject(
-            new Error(
-              `An error occured while verifying the user credentials, err: ${err}`
-            )
+            `An error occured while verifying the user credentials, err: ${err}`
           );
         }
 
@@ -60,12 +56,12 @@ const repository = connection => {
   });
 };
 
-const connect = connection => {
+const connect = (connection, encryptionOptions) => {
   return new Promise((resolve, reject) => {
     if (!connection) {
-      reject(new Error("connection was not supplied!"));
+      reject("connection was not supplied!");
     }
-    resolve(repository(connection));
+    resolve(repository(connection, encryptionOptions));
   });
 };
 

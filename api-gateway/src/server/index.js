@@ -11,7 +11,7 @@ const start = container => {
     const { port } = container.resolve("serverSettings");
 
     if (!port) {
-      reject(new Error("The server must be started with an available port"));
+      reject("The server must be started with an available port");
     }
 
     const app = express();
@@ -36,7 +36,7 @@ const start = container => {
       // Add a custom error handler that returns errors as HTML
       app.use((err, req, res, next) => {
         res.status(err.status);
-        res.send(err.message.replace(/\\n/g, '\n'));
+        res.json({ error: err.message.replace(/\\n/g, "\n") });
       });
 
       const server = app.listen(port, () => resolve(server));

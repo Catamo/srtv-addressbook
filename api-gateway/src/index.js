@@ -31,6 +31,7 @@ mediator.on("di.ready", container => {
       app.on("close", () => {
         console.log("Server finished");
       });
+      mediator.emit("app.running", app);
     });
   });
 });
@@ -38,3 +39,5 @@ mediator.on("di.ready", container => {
 di.init(mediator);
 
 mediator.emit("init");
+
+module.exports = { mediator };

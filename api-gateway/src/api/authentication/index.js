@@ -24,7 +24,7 @@ module.exports = (app, container) => {
         const token = jwt.sign({ email: user.email }, tokenSecret, {
           expiresIn: tokenExpirationSeconds
         });
-        res.status(status.OK).json({ email: user.email, token });
+        res.status(status.OK).json({ userEmail: user.email, token });
       });
     })(req, res);
   });

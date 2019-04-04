@@ -108,14 +108,14 @@
         }
       }
     },
-    "/users/{userId}/contacts": {
+    "/contacts": {
       "post": {
         "tags": [
           "users",
           "contacts"
         ],
         "summary": "Create a new contact for the user",
-        "description": "Creates a contact which is related to the user by the user id",
+        "description": "Creates a contact which is related to the user by the user email that is in the token",
         "operationId": "createContact",
         "consumes": [
           "application/json"
@@ -141,9 +141,6 @@
               "$ref": "#/definitions/Contact"
             }
           },
-          "400": {
-            "description": "Invalid User Id supplied"
-          },
           "403": {
             "description": "Authorization required"
           },
@@ -153,16 +150,16 @@
         },
         "security": [
           {
-            "api_key": []
+            "Bearer": []
           }
         ]
       }
     }
   },
   "securityDefinitions": {
-    "api_key": {
+    "Bearer": {
       "type": "apiKey",
-      "name": "api_key",
+      "name": "Authorization",
       "in": "header"
     }
   },
@@ -173,7 +170,7 @@
         "userEmail": {
           "type": "string"
         },
-        "jwt": {
+        "token": {
           "type": "string"
         }
       },

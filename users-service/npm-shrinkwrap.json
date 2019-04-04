@@ -223,11 +223,6 @@
         "tweetnacl": "^0.14.3"
       }
     },
-    "bcryptjs": {
-      "version": "2.4.3",
-      "resolved": "https://registry.npmjs.org/bcryptjs/-/bcryptjs-2.4.3.tgz",
-      "integrity": "sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms="
-    },
     "better-assert": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/better-assert/-/better-assert-1.0.2.tgz",
@@ -3358,10 +3353,15 @@
       }
     },
     "srtv-encryption": {
-      "version": "https://github.com/Catamo/srtv-addressbook/raw/master/local-modules/srtv-encryption.tar.gz",
-      "integrity": "sha512-o3UEcrzres6/eQpDFFuEdvJ6/ud76Xb6KNSYqg+0BJw+RU8xfpnsR/u8VRU1e7Q19Xo+cFuGJVp5MpAv4d+2Dg==",
+      "version": "file:../local-modules/srtv-encryption",
       "requires": {
         "bcryptjs": "^2.4.3"
+      },
+      "dependencies": {
+        "bcryptjs": {
+          "version": "2.4.3",
+          "bundled": true
+        }
       }
     },
     "sshpk": {

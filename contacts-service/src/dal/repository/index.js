@@ -10,12 +10,8 @@ const repository = db => {
           resolve(contact);
         })
         .catch(error => {
-          console.log(error, error.stack)
-          reject(
-            new Error(
-              "An error occured while creating the contact, err:" + error
-            )
-          );
+          console.log(error, error.stack);
+          reject("An error occured while creating the contact, err:" + error);
         });
     });
   };
@@ -28,7 +24,7 @@ const repository = db => {
 const connect = db => {
   return new Promise((resolve, reject) => {
     if (!db) {
-      reject(new Error("db was not supplied!"));
+      reject("db was not supplied!");
     }
     resolve(repository(db));
   });

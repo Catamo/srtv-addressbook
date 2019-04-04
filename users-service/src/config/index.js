@@ -6,4 +6,8 @@ const amqpSettings = {
   url: process.env.BROKER_URL
 };
 
-module.exports = Object.assign({}, { dbSettings, amqpSettings });
+const encryptionSettings = {
+  hashingRounds: process.env.HASHING_ROUNDS
+};
+
+module.exports = Object.assign({}, { dbSettings, amqpSettings, encryptionSettings });

@@ -1,0 +1,24 @@
+version: "3"
+
+services:      
+  api_gateway:
+    command: npm run int-test
+    restart: 'no'
+    environment:
+    - JWT_SECRET=123qwe132asd123zcx
+    - BROKER_URL=amqp://rabbitmq:5672
+    - JWT_EXPIRATION_SECONDS=1h
+    depends_on:
+    - mongo
+  users_service:
+    environment:
+    - DB_SERVER_URL=mongodb://mongo:27017
+    - BROKER_URL=amqp://rabbitmq:5672
+    - ENV=TEST
+    command: npm run start
+  mongo:
+    image: mongo
+    ports:
+    - "27017:27017"
+    logging:
+      driver: none

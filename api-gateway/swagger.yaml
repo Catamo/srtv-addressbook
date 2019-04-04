@@ -72,13 +72,13 @@ paths:
             $ref: "#/definitions/User"
         400:
           description: "The user data entered is not valid"
-  /users/{userId}/contacts:
+  /contacts:
     post:
       tags:
       - "users"
       - "contacts"
       summary: "Create a new contact for the user"
-      description: "Creates a contact which is related to the user by the user id"
+      description: "Creates a contact which is related to the user by the user email that is in the token"
       operationId: "createContact"
       consumes:
       - "application/json"
@@ -96,26 +96,24 @@ paths:
           description: "The contact was created"
           schema:
             $ref: "#/definitions/Contact"
-        400:
-          description: "Invalid User Id supplied"
         403:
           description: "Authorization required"
         404:
           description: "User not found"
       security:
-      - api_key: []
+      - Bearer: []      
 securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 definitions:
   Authentication:
     type: "object"
     properties:
       userEmail:
         type: "string"
-      jwt:
+      token:
         type: "string"
     xml:
       name: "Authentication"
