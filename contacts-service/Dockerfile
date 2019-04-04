@@ -13,9 +13,7 @@ RUN chown -R appuser:appgroup $HOME/* /usr/local/
 
 WORKDIR $HOME/app
 
-RUN npm cache clean --force && \
-    npm cache verify && \
-    npm install --target=8.10.0 --target_platform=linux --target_arch=x64
+RUN npm install
 
 RUN chown -R appuser:appgroup $HOME/*
 USER appuser
