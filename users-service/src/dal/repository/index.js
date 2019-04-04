@@ -5,7 +5,7 @@ const repository = (connection, encryptionOptions) => {
   const registerUser = user =>
     new Promise((resolve, reject) => {
       const sendUser = (err, user) => {
-        if (err) {
+        if (err || !user) {
           reject(`An error occured while creating the new user, err: ${err}`);
           return;
         }
@@ -31,10 +31,11 @@ const repository = (connection, encryptionOptions) => {
   const verifyUserCredentials = userCredentials =>
     new Promise((resolve, reject) => {
       const verifyUser = (err, user) => {
-        if (err) {
+        if (err || !user) {
           reject(
             `An error occured while verifying the user credentials, err: ${err}`
           );
+          return;
         }
 
         compareHash(userCredentials.password, user.password).then(match => {
@@ -60,6 +61,7 @@ const connect = (connection, encryptionOptions) => {
   return new Promise((resolve, reject) => {
     if (!connection) {
       reject("connection was not supplied!");
+      return;
     }
     resolve(repository(connection, encryptionOptions));
   });

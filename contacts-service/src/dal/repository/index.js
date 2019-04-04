@@ -25,6 +25,7 @@ const connect = db => {
   return new Promise((resolve, reject) => {
     if (!db) {
       reject("db was not supplied!");
+      return;
     }
     resolve(repository(db));
   });
