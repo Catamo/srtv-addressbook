@@ -8,24 +8,28 @@ module.exports = (app, container) => {
   );
 
   app.post("/authentication", (req, res, next) => {
-    passport.authenticate("local", { session: false }, (error, user) => {
-      if (error || !user) {
-        res.status(status.BAD_REQUEST).json({ error });
+    passport.authenticate("local", { session: false }, (errAuth, user) => {
+      if (errAuth || !user) {
+        res.status(status.BAD_REQUEST).json({ errAuth });
         return;
       }
-      console.log(error, user);
+
       const payload = {
         username: user.email
       };
-      req.login(payload, { session: false }, error => {
-        if (error) {
-          res.status(status.BAD_REQUEST).send({ error });
+      req.login(payload, { session: false }, errLogin => {
+        
+        console.log('login', errLogin, user);
+        if (errLogin) {
+          res.status(status.BAD_REQUEST).send({ error: errLogin });
           return;
         }
 
+        console.log('login - preToken', errLogin, user);
         const token = jwt.sign({ email: user.email }, tokenSecret, {
           expiresIn: tokenExpirationSeconds
         });
+        console.log('token', token)
         res.status(status.OK).json({ userEmail: user.email, token });
       });
     })(req, res);
