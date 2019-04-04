@@ -6,7 +6,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 ENV HOME=/home/appuser
 
-COPY package.json npm-shrinkwrap.json swagger.json $HOME/app/
+COPY package.json swagger.json $HOME/app/
 
 COPY src/ $HOME/app/src
 
