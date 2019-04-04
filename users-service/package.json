@@ -49,6 +49,8 @@
     "http-status": "^0.2.5",
     "mongodb": "^2.2.36",
     "mongoose": "^5.4.20",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "srtv-amqp-utils": "https://github.com/Catamo/srtv-addressbook/raw/master/local-modules/srtv-amqp-utils.tar.gz",
+    "srtv-encryption": "https://github.com/Catamo/srtv-addressbook/raw/master/local-modules/srtv-encryption.tar.gz"
   }
 }
