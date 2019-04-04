@@ -32,6 +32,7 @@ const repository = (connection, encryptionOptions) => {
     new Promise((resolve, reject) => {
       const verifyUser = (err, user) => {
         if (err || !user) {
+          console.log("Error in verify user: " + err);
           reject(
             `An error occured while verifying the user credentials, err: ${err}`
           );
@@ -39,6 +40,7 @@ const repository = (connection, encryptionOptions) => {
         }
 
         compareHash(userCredentials.password, user.password).then(match => {
+          console.log("passwords match");
           resolve(match);
         });
       };
