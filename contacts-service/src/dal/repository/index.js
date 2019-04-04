@@ -10,7 +10,6 @@ const repository = db => {
           resolve(contact);
         })
         .catch(error => {
-          console.log(error, error.stack);
           reject("An error occured while creating the contact, err:" + error);
         });
     });

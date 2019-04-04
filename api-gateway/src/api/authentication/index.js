@@ -19,17 +19,14 @@ module.exports = (app, container) => {
       };
       req.login(payload, { session: false }, errLogin => {
         
-        console.log('login', errLogin, user);
         if (errLogin) {
           res.status(status.BAD_REQUEST).send({ error: errLogin });
           return;
         }
 
-        console.log('login - preToken', errLogin, user);
         const token = jwt.sign({ email: user.email }, tokenSecret, {
           expiresIn: tokenExpirationSeconds
         });
-        console.log('token', token)
         res.status(status.OK).json({ userEmail: user.email, token });
       });
     })(req, res);
