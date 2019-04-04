@@ -12,8 +12,8 @@ module.exports = (workerChannel, repo) => {
 
     repo
       .addContact(contact)
-      .then(contact => {
-        callback(null, contact);
+      .then(dbContact => {
+        callback(null, dbContact);
       })
       .catch(err => {
         callback(err);

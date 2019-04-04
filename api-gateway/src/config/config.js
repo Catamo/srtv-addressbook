@@ -7,7 +7,6 @@ const serverSettings = {
 };
 
 const authSettings = {
-  usersServiceUrl: process.env.USER_SERVICE_URL,
   tokenExpirationSeconds: process.env.JWT_EXPIRATION_SECONDS,
   tokenSecret: process.env.JWT_SECRET
 };
