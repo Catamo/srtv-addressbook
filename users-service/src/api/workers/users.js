@@ -29,11 +29,9 @@ module.exports = (workerChannel, repo) => {
       repo
         .verifyUserCredentials(user)
         .then(userVerified => {
-          console.log('it worked - ', userVerified)
           callback(null, { userVerified });
         })
         .catch(err => {
-          console.log('error in worker', err)
           callback(err);
         });
     }
