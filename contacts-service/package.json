@@ -48,6 +48,6 @@
     "helmet": "^3.16.0",
     "http-status": "^0.2.5",
     "morgan": "^1.9.1",
-    "srtv-amqp-utils": "file:../local-modules/srtv-amqp-utils"
+    "srtv-amqp-utils": "https://github.com/Catamo/srtv-addressbook/raw/master/srtv-amqp-utils.tar.gz"
   }
 }
