@@ -20,6 +20,7 @@ module.exports = (app, container) => {
       req.login(payload, { session: false }, error => {
         if (error) {
           res.status(status.BAD_REQUEST).send({ error });
+          return;
         }
 
         const token = jwt.sign({ email: user.email }, tokenSecret, {
